@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet,ScrollView} from 'react-native'
 import SearchBar from '../components/SearchBar'
 import yelp from '../api/yelp'
 import useResults from '../hooks/useResults'
@@ -17,18 +17,32 @@ const filterResultsByPrice = (price)=>{
 }
 
     return(
-        <View>
+        <>
             <SearchBar 
             term={term}
             onTermChange={(newTerm)=>{setTerm(newTerm)}}
             onTermSubmit={()=>{searchApi(term)}}
+            style={{marginBottom: 10}}
             />
             {error?<Text>{error}</Text>:null}
-            <Text>We have found {results.length} results</Text>
-            <ResultsList results={filterResultsByPrice('$')} title='cost effective'/>
-            <ResultsList results={filterResultsByPrice('$$')} title='bit pricier'/>
-            <ResultsList results={filterResultsByPrice('$$$')} title='big spender'/>
-        </View>
+            <ScrollView>
+            <ResultsList
+             
+             results={filterResultsByPrice('$')}
+              title='cost effective'
+              />
+            <ResultsList
+             
+            results={filterResultsByPrice('$$')}
+            title='bit pricier'
+             />
+            <ResultsList
+             
+             results={filterResultsByPrice('$$$')}
+             title='big spender'
+             />
+            </ScrollView>
+        </>
     )
 }
 export default SearchScreen
